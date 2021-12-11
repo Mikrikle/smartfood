@@ -1,0 +1,7 @@
+
+.vscode/
+.vs/
+siteapp/__pycache__/
+siteapp/customvision.py
+smartfood/__pycache__/
+siteapp/migrations/__pycache__/
