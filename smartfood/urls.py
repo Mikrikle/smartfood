@@ -22,7 +22,7 @@ from .views import base_redirect
 urlpatterns = [
     path('', base_redirect),
     path('admin/', admin.site.urls),
-    path('main/', include('siteapp.urls'))
+    path('smartfood/', include('siteapp.urls'))
 ]
 
 if settings.DEBUG:

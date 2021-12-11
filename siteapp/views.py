@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.db.models import Sum
-from .customvision import *
-from .models import IngredientInfo, DishInfo, IngredientItem, DishItem
+from django.db.models import Q
+from .customvision import prediction_key, prediction_resource_id, project_id, publish_iteration_name, ENDPOINT
+from .models import FoodInfo, FoodCategory, FoodItem
 from itertools import chain
 import json
 from django.views import View
@@ -12,11 +12,11 @@ from azure.cognitiveservices.vision.customvision.prediction import CustomVisionP
 from msrest.authentication import ApiKeyCredentials
 
 class UserInfoView(View):
-
+    """Вывод персональной информации"""
     def get(self, request):
-        model1 = IngredientInfo.objects.filter(owner=request.user)
-        model2 = DishInfo.objects.filter(owner=request.user)
-        information = sorted(list(chain(model1, model2)), key=lambda instance: instance.date, reverse=True)
+        model = FoodInfo.objects.filter(owner=request.user)
+        print(model)
+        information = sorted(model, key=lambda instance: instance.date, reverse=True)
         count_values = {
             'nProteins':0,
             'nFats':0,
@@ -32,12 +32,16 @@ class UserInfoView(View):
             count_values['nFats'] += item.food.fats
             count_values['nCarbohydrates'] += item.food.carbohydrates
 
-        return render(request, 'index2.html', context={'information': information, 'count_values':count_values})
+        return render(request, 'info.html', context={'information': information, 'count_values':count_values})
+
 
 
 class BackgroundImageAnalyze(View):
+    """Распознавание объектов"""
     def post(self, request):
+        print("start customvision")
         rezult = []
+        names = []
         if request.FILES.get("img"):
             prediction_credentials = ApiKeyCredentials(in_headers={"Prediction-key": prediction_key})
             predictor = CustomVisionPredictionClient(ENDPOINT, prediction_credentials)
@@ -48,23 +52,33 @@ class BackgroundImageAnalyze(View):
             for prediction in results.predictions:
                 if(prediction.probability * 100 > 30):
                     rezult.append(prediction.tag_name)
+            for rez in rezult:
+                try:
+                    names.append(FoodItem.objects.get(visionname__iexact=rez).name)
+                except:
+                    names.append("Not Found")
         else:
             rezult = None
-        return HttpResponse(json.dumps({'rezult':rezult}))
+            names = None
+        return HttpResponse(json.dumps({'rezult':rezult, 'names':names}))
 
 
-class BackgroundAddView(View):
+
+class BackgroundFoodAnalzeView(View):
+    """Возвращает список возможных блюд"""
     def post(self, request):
-        for jsontiem in request.POST.get("data").split(";"):
-            print(json.loads(jsontiem))
-        return HttpResponse("ok")
+        foodlist = request.POST.get("data").split(",")
+        rezult = FoodItem.objects.filter(Q(visionname__in=foodlist) | Q(isEatable = True))
+        print(foodlist, rezult, json.dumps([ob.as_json() for ob in rezult]))
+        return HttpResponse(json.dumps([ob.as_json() for ob in rezult]))
+
+
 
 class IndexView(View):
+    """Главная страница"""
     template = "index.html"
 
     def get(self, request):
-        model1 = IngredientItem.objects.all()
-        model2 = DishItem.objects.all()
-
-        foodlist = sorted(list(chain(model1, model2)), key=lambda instance: instance.name)
+        model = FoodItem.objects.all()
+        foodlist = sorted(model, key=lambda instance: instance.name)
         return render(request, self.template, context={'foodlist': foodlist})
