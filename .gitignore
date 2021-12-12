@@ -5,3 +5,5 @@ siteapp/__pycache__/
 siteapp/customvision.py
 smartfood/__pycache__/
 siteapp/migrations/__pycache__/
+*.xml
+.idea/smartfood.iml
