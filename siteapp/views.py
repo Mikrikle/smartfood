@@ -67,9 +67,16 @@ class BackgroundImageAnalyze(View):
 class BackgroundFoodAnalzeView(View):
     """Возвращает список возможных блюд"""
     def post(self, request):
-        foodlist = request.POST.get("data").split(",")
-        rezult = FoodItem.objects.filter(Q(visionname__in=foodlist) | Q(isEatable = True))
-        print(foodlist, rezult, json.dumps([ob.as_json() for ob in rezult]))
+        foodlist_objects = request.POST.get("data").split(";")
+        foodlist_names = []
+        if(len(foodlist_objects) > 1):
+            foodlist_objects = foodlist_objects[:-1]
+            foodlist_names = [json.loads(obj)['visionname'] for obj in foodlist_objects]
+            print(foodlist_names)
+
+        ingredients = FoodItem.objects.filter(visionname__in=foodlist_names)
+        rezult = FoodItem.objects.filter(Q(ingredients__in=ingredients) | (Q(visionname__in=foodlist_names) & Q(isEatable=True))).distinct()
+        print(rezult)
         return HttpResponse(json.dumps([ob.as_json() for ob in rezult]))
 
 
