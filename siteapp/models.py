@@ -47,7 +47,7 @@ class FoodItem(models.Model):
     isIngredient = models.BooleanField("Может использоваться в качестве ингредиента")
     isEatable = models.BooleanField("Готово к употреблению")
     ingredients = models.ManyToManyField('self', blank=True, verbose_name="Ингредиенты")
-    img = models.ImageField("Изображение", upload_to = "img/dishes/")
+    img = models.ImageField("Изображение", upload_to = "img/food")
     url = models.SlugField(max_length=160, unique=True)
     category = models.ForeignKey(
         FoodCategory, verbose_name="Категория", on_delete=models.SET_NULL, null=True
