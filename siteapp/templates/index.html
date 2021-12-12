@@ -125,14 +125,26 @@
 
 <body>
 
-    <a href="{% url 'info' %}">кнопка</a>
+    <div class="container">
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+      <a href="{% url 'index' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+        <img src="{% static 'images/logo.jpg' %}" width="40" height="32"/>
+        <span class="fs-4">SmartFood</span>
+      </a>
+
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link active" aria-current="page">Главная</a></li>
+        <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link">FAQs</a></li>
+      </ul>
+    </header>
+  </div>
 
     <h5>Выбрать из списка или фото</h5>
     {% for item in foodlist %}
     <div class="fooditem" onClick = >
         <div class="fooditem_name">{{ item.name }}</div>
         <div class="fooditem_model_name">{{ item.visionname }}</div>
-        <img src="{{item.img.url}}" alt={item.name}} width="64" height="64"></a>
+        <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
     </div>
     {% endfor %}
 
