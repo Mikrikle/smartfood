@@ -125,6 +125,12 @@
 
 <body>
 
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="list-check" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
+      </symbol>
+    </svg>
+
     <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="{% url 'index' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
@@ -139,12 +145,25 @@
     </header>
   </div>
 
-    <h5>Выбрать из списка или фото</h5>
+    <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
     {% for item in foodlist %}
-    <div class="fooditem" onClick = >
-        <div class="fooditem_name">{{ item.name }}</div>
-        <div class="fooditem_model_name">{{ item.visionname }}</div>
-        <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
+    <div class="fooditem text-center" onClick = >
+        <div class="list-group">
+          <label class="list-group-item d-flex gap-3">
+            <input class="form-check-input flex-shrink-0" type="checkbox" value="">
+            <span class="pt-1 form-checked-content">
+                <strong><div class="fooditem_name">{{ item.name }}</div></strong>
+                <div class="fooditem_model_name">{{ item.visionname }}</div>
+                <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
+            </span>
+          </label>
+          <label class="list-group-item d-flex gap-3 bg-light">
+            <input class="form-check-input form-check-input-placeholder bg-light flex-shrink-0" disabled type="checkbox" value="" style="font-size: 1.375em;">
+            <span class="pt-1 form-checked-content">
+              <span contenteditable="true" class="w-100">Добавить свой продукт:</span>
+            </span>
+          </label>
+        </div>
     </div>
     {% endfor %}
 
