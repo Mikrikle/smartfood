@@ -82,3 +82,11 @@ class IndexView(View):
         model = FoodItem.objects.all()
         foodlist = sorted(model, key=lambda instance: instance.name)
         return render(request, self.template, context={'foodlist': foodlist})
+
+
+class FAQView(View):
+    """О нас"""
+    template = "faq.html"
+
+    def get(self, request):
+        return render(request, self.template)
