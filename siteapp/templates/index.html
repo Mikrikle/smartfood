@@ -1,11 +1,9 @@
 {% load static %}
 
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="{% static '/css/bootstrap.css' %}"
-/>
-
+<head>
+    <link type="text/css" href="{% static '/css/bootstrap.css' %}" rel="stylesheet"/>
+    <link href="{% static '/css/list-groups.css' %}" rel="stylesheet"/>
+</head>
 <script>
 
     let current_all_food_list = []
@@ -147,13 +145,13 @@
 
     <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
     {% for item in foodlist %}
-    <div class="fooditem text-center" onClick = >
+    <div class="fooditem" onClick = >
         <div class="list-group">
           <label class="list-group-item d-flex gap-3">
             <input class="form-check-input flex-shrink-0" type="checkbox" value="">
             <span class="pt-1 form-checked-content">
                 <strong><div class="fooditem_name">{{ item.name }}</div></strong>
-                <div class="fooditem_model_name">{{ item.visionname }}</div>
+                <div class="fooditem_model_name opacity-0">{{ item.visionname }}</div>
                 <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
             </span>
           </label>
