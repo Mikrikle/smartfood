@@ -37,12 +37,17 @@
     } 
 
     // добавляет еду в список текущей еды
-    let addToFoodList = function(name, visionname)
-    {
+    let addToFoodList = function(name, visionname) {
         createRowDiv(name)
         current_all_food_list.push({'name':name,'visionname': visionname});
-        console.log(current_all_food_list);
+        console.log(`Выбраны: ${JSON.stringify(current_all_food_list)}`);
     }
+
+    let deleteFromFoodList = function(name) {
+        current_all_food_list = current_all_food_list.filter(obj => obj.name !== name);
+        console.log(`Выбраны: ${JSON.stringify(current_all_food_list)}`);
+    }
+   
 
     // распознавание еды по фото
     document.addEventListener("DOMContentLoaded",
@@ -65,12 +70,23 @@
                     xhr.addEventListener("readystatechange", () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             let response = JSON.parse(xhr.response);
-                            console.log(response.rezult);
+                            console.log(`Результат распознавания: ${response.rezult}`);
                             if(response.rezult)
                             {
+                                let all_fooditem_selectors = document.querySelectorAll(".fooditem_select");
+                                let all_fooditem_selectors_objects = []
+                                for (let i = 0; i < all_fooditem_selectors.length; i++) {
+                                    let value = all_fooditem_selectors[i].parentNode.querySelector(".fooditem_name").innerHTML;
+                                    all_fooditem_selectors_objects.push({"name":value, "obj":all_fooditem_selectors[i]});
+                                }
+
                                 for (let i = 0; i < response.rezult.length; ++i)
                                 {
-                                    addToFoodList(response.names[i], response.rezult[i])
+                                    let obj = all_fooditem_selectors_objects.find(obj => obj.name == response.names[i]).obj;
+                                    if(!obj.checked){
+                                        addToFoodList(response.names[i], response.rezult[i])
+                                        obj.checked = true;
+                                    }
                                 }
                             }
                         };
@@ -87,14 +103,13 @@
             let elements = document.querySelectorAll(".fooditem_select");
             for (let i = 0; i < elements.length; i++) {
                 elements[i].onchange = function(){
-                    console.log(this.checked);
                     let name = this.parentNode.querySelector(".fooditem_name").innerHTML;
                     let visionname = this.parentNode.querySelector(".fooditem_model_name").innerHTML;
                     if(this.checked) {
                         addToFoodList(name, visionname);
                     }
                     else {
-                        current_all_food_list = current_all_food_list.filter(obj => obj.name !== name);
+                        deleteFromFoodList(name);
                     }
                 };
             }
@@ -121,7 +136,7 @@
                     xhr.addEventListener("readystatechange", () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             let response = JSON.parse(xhr.response);
-                            console.log(response);
+                            console.log(`Список предложеной еды ${response}`);
                         };
                     });                   
 
