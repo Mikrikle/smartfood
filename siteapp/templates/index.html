@@ -82,10 +82,13 @@
 
                                 for (let i = 0; i < response.rezult.length; ++i)
                                 {
-                                    let obj = all_fooditem_selectors_objects.find(obj => obj.name == response.names[i]).obj;
-                                    if(!obj.checked){
-                                        addToFoodList(response.names[i], response.rezult[i])
-                                        obj.checked = true;
+                                    let food_input_obj = all_fooditem_selectors_objects.find(obj => obj.name == response.names[i]);
+                                    if(food_input_obj){
+                                        food_input = food_input_obj.obj;
+                                        if(!food_input.checked){
+                                            addToFoodList(response.names[i], response.rezult[i])
+                                            food_input.checked = true;
+                                        }
                                     }
                                 }
                             }
