@@ -88,8 +88,14 @@ class BackgroundAddFoddView(View):
         if(len(foodlist_objects) > 1):
             for food_obj in foodlist_objects[:-1]:
                 food_json = json.loads(food_obj)
-                food = FoodItem.objects.get(name=food_json["name"])
-                fi = FoodInfo(owner=request.user, food=food, weight=food_json["weight"])
+                try:
+                    food = FoodItem.objects.get(name=food_json["name"])
+                except:
+                    return HttpResponse("error")
+                try:
+                    fi = FoodInfo(owner=request.user, food=food, weight=food_json["weight"])
+                except:
+                    fi = FoodInfo(owner=request.user, food=food, weight=100)
                 print(fi)
                 fi.save()
         return HttpResponse("ok")
