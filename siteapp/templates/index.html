@@ -1,53 +1,62 @@
+{% extends  'base.html' %}
 {% load static %}
 
-<head>
-    <link type="text/css" href="{% static '/css/bootstrap.css' %}" rel="stylesheet"/>
-    <link href="{% static '/css/list-groups.css' %}" rel="stylesheet"/>
-</head>
+{% block header %}
 <script>
 
-    let current_all_food_list = []
-    //let current_selected_food_list = []
-
-    // создание div с названием еды и весом
-    let createRowDiv = function(text)
-    {  
-        let rl = document.getElementById("rezult_list");
-        let div_foodList = document.createElement('div');
-        div_foodList.className = "FoodList";
-
-        let div_name = document.createElement('div');
-        div_name.innerHTML = `${text}`;
-        div_name.className = "foodListItemName"
-        let input_weight = document.createElement('input');
-        input_weight.value = 100;
-        input_weight.setAttribute("maxlength", "4");
-        input_weight.setAttribute("required", "true");
-        input_weight.setAttribute("type", "number");
-        input_weight.className = "foodListItemInputWeight";
-        input_weight.innerHTML = `${100}`;
-        input_weight.addEventListener(
-            'keyup', function(){
-                this.value = this.value.replace(/[^\d]/g, '');
-            }
-        );
-        div_foodList.append(div_name);
-        div_foodList.append(input_weight);
-        rl.append(div_foodList);
-    } 
+    let selected_food_list = [];
+    let selected_dishes_list = [];
 
     // добавляет еду в список текущей еды
     let addToFoodList = function(name, visionname) {
-        createRowDiv(name)
-        current_all_food_list.push({'name':name,'visionname': visionname});
-        console.log(`Выбраны: ${JSON.stringify(current_all_food_list)}`);
+        selected_food_list.push({'name':name,'visionname': visionname});
+        console.log(`Выбраны: ${JSON.stringify(selected_food_list)}`);
     }
 
+    // удаляет еду из списка текущей еды
     let deleteFromFoodList = function(name) {
-        current_all_food_list = current_all_food_list.filter(obj => obj.name !== name);
-        console.log(`Выбраны: ${JSON.stringify(current_all_food_list)}`);
+        selected_food_list = selected_food_list.filter(obj => obj.name !== name);
+        console.log(`Выбраны: ${JSON.stringify(selected_food_list)}`);
     }
-   
+
+    //-------------------------------------------------------------------------------------------------
+
+    // создание div во всплывающем окне с названием еды и весом
+    let createDishItemDiv = function(name) {  
+        let dishes_list = document.getElementById("dishes_list");
+        let html_template = `
+        <div class="fooditem">
+            <label class="list-group-item d-flex gap-3">
+                <input class="dishitem_select form-check-input flex-shrink-0" type="checkbox" value="">
+                <span class="pt-1 form-checked-content">
+                    <strong><div class="fooditem_name">${name}</div></strong>
+                </span>
+                <input class="fooditem_weight" value="">
+            </label>
+        </div>`
+        let doc = new DOMParser().parseFromString(html_template, "text/html");
+        dishes_list.appendChild(doc.documentElement);
+    }
+
+    // очиста списка блюд
+    let clearDishList = function() {
+        document.getElementById("dishes_list").innerHTML = "";
+        selected_dishes_list = [];
+    }
+
+    // добавляет блюда в список текущих блюд
+    let addToDishList = function(name, weight) {
+        selected_dishes_list.push({'name':name,'weight': weight});
+        console.log(`Выбраны: ${JSON.stringify(selected_dishes_list)}`);
+    }
+
+    // удаляет блюда из списка текущих блюд
+    let deleteFromDishList = function(name) {
+        selected_dishes_list = selected_dishes_list.filter(obj => obj.name !== name);
+        console.log(`Выбраны: ${JSON.stringify(selected_dishes_list)}`);
+    }
+    
+    //-------------------------------------------------------------------------------------------------
 
     // распознавание еды по фото
     document.addEventListener("DOMContentLoaded",
@@ -100,12 +109,12 @@
         }
     );
 
-    // Добавляет еду из списка по клику на нее
+    // Добавляет/Удаляет еду из списка по клику на нее для выбранной еды
     document.addEventListener("DOMContentLoaded", 
-        function(){
+        function() {
             let elements = document.querySelectorAll(".fooditem_select");
             for (let i = 0; i < elements.length; i++) {
-                elements[i].onchange = function(){
+                elements[i].onchange = function() {
                     let name = this.parentNode.querySelector(".fooditem_name").innerHTML;
                     let visionname = this.parentNode.querySelector(".fooditem_model_name").innerHTML;
                     if(this.checked) {
@@ -118,18 +127,37 @@
             }
         }
     );
+
+    
+    // Добавляет/Удаляет еду из списка по клику на нее для списка предложенных блюд
+    let updateOnClickToDishes = function() {
+        let elements = document.querySelectorAll(".dishitem_select");
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].onchange = function() {
+                let name = this.parentNode.querySelector(".fooditem_name").innerHTML;
+                let weight = this.parentNode.querySelector(".fooditem_weight").value;
+                if(this.checked) {
+                    addToDishList(name, weight);
+                }
+                else {
+                    deleteFromDishList(name);
+                }
+            };
+        }
+    }
+    
     
     // Отправка данных для получения списка возможных блюд
     document.addEventListener("DOMContentLoaded", 
         function(){
-            document.getElementById("btn_confirm").addEventListener("click", 
+            document.getElementById("btn_confirm_food").addEventListener("click", 
                 function() {
                     const xhr = new XMLHttpRequest();
                     const url = "{% url 'foodanalize' %}";
-                    let s_all_food_list = ""
-                    for(let i = 0; i < current_all_food_list.length; ++i)
+                    let s_all_food_list = "";
+                    for(let i = 0; i < selected_food_list.length; ++i)
                     {
-                        s_all_food_list += JSON.stringify(current_all_food_list[i]) + ";";
+                        s_all_food_list += JSON.stringify(selected_food_list[i]) + ";";
                     }
                     const params = `csrfmiddlewaretoken={{ csrf_token }}&data=${s_all_food_list}`;
                     xhr.open("POST", url, true);
@@ -139,7 +167,44 @@
                     xhr.addEventListener("readystatechange", () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             let response = JSON.parse(xhr.response);
-                            console.log(`Список предложеной еды ${response}`);
+                            console.log(`Список предложеной еды ${JSON.stringify(response)}`);
+                            clearDishList();
+                            for(let i = 0; i < response.length; ++i){
+                                createDishItemDiv(response[i].name);
+                            }
+                            updateOnClickToDishes();
+                        };
+                    });                   
+
+                    xhr.send(params);
+                }
+            );
+        }
+    );
+
+
+    // Отправка данных для сохранения блюд в базу данных
+    document.addEventListener("DOMContentLoaded", 
+        function(){
+            document.getElementById("btn_confirm_dishes").addEventListener("click", 
+                function() {
+                    const xhr = new XMLHttpRequest();
+                    const url = "{% url 'addfood' %}";
+                    let s_all_food_list = "";
+                    for(let i = 0; i < selected_dishes_list.length; ++i)
+                    {
+                        console.log(selected_dishes_list[i]);
+                        s_all_food_list += JSON.stringify(selected_dishes_list[i]) + ";";
+                    }
+                    const params = `csrfmiddlewaretoken={{ csrf_token }}&data=${s_all_food_list}`;
+                    xhr.open("POST", url, true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+                    // получение ответа от сервера
+                    xhr.addEventListener("readystatechange", () => {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            $('#exampleModal').modal('hide');
+                            console.log("Успешно");
                         };
                     });                   
 
@@ -149,8 +214,9 @@
         }
     );
 </script>
+{% endblock %}
 
-<body>
+{% block body %}
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
       <symbol id="list-check" viewBox="0 0 16 16">
@@ -158,56 +224,62 @@
       </symbol>
     </svg>
 
-    <div class="container">
-    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-      <a href="{% url 'index' %}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
-        <img src="{% static 'images/logo.jpg' %}" width="40" height="32"/>
-        <span class="fs-4">SmartFood</span>
-      </a>
-
-      <ul class="nav nav-pills">
-        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link active" aria-current="page">Главная</a></li>
-        <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link">FAQs</a></li>
-      </ul>
-    </header>
-  </div>
-
+    
     <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
-   <div>
-       <div class="list-group">
+    <div>
+        <div class="list-group">
             {% for item in foodlist %}
                 <div class="fooditem">
-                  <label class="list-group-item d-flex gap-3">
-                    <input class="fooditem_select form-check-input flex-shrink-0" type="checkbox" value="">
-                    <span class="pt-1 form-checked-content">
-                        <strong><div class="fooditem_name">{{ item.name }}</div></strong>
-                        <div class="fooditem_model_name opacity-0">{{ item.visionname }}</div>
-                        <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
-                    </span>
-                  </label>
+                    <label class="list-group-item d-flex gap-3">
+                        <input class="fooditem_select form-check-input flex-shrink-0" type="checkbox" value="">
+                        <span class="pt-1 form-checked-content">
+                            <strong><div class="fooditem_name">{{ item.name }}</div></strong>
+                            <div class="fooditem_model_name opacity-0">{{ item.visionname }}</div>
+                            <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
+                        </span>
+                    </label>
                 </div>
             {% endfor %}
         </div>
     </div>
 
+    <div class="container text-center">
+        <form action="" method="post" enctype="multipart/form-data" id="form" class="dropzone" id="dropzone">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="file" name="img" id="img" multiple />
+                <div id="handleForm">Распознать продукты</div>
+            </div>
+        </form>
+    </div>
+    <div class="container text-center">
 
-   <!-- <label class="list-group-item d-flex gap-3 bg-light">
-            <input class="form-check-input form-check-input-placeholder bg-light flex-shrink-0" disabled type="checkbox" value="" style="font-size: 1.375em;">
-            <span class="pt-1 form-checked-content">
-              <span contenteditable="true" class="w-100">Добавить свой продукт:</span>
-            </span>
-          </label> -->
-    
-    <form action="" method="post" enctype="multipart/form-data" id="form" class="dropzone" id="dropzone">
-        {% csrf_token %}
-        <input type="file" name="img" id="img" multiple />
-        <div id="handleForm">Send</div>
-    </form>
-
-
-    <h5>Результат</h5>
-    <div id="rezult_list">
+    </div>
+    <div class="container text-center">
+        <!-- Button trigger modal -->
+        <button id="btn_confirm_food" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+        ПОДТВЕРДИТЬ
+        </button>
     </div>
 
-    <div id="btn_confirm">ПОДТВЕРДИТЬ</div>
-</body>
+    
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Предложенные блюда</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body list-group" id="dishes_list">
+        </div>
+        <div class="modal-footer">
+          <button id="btn_confirm_dishes" type="button" class="btn btn-primary">Подтвердить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock body %}

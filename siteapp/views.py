@@ -80,6 +80,20 @@ class BackgroundFoodAnalzeView(View):
         return HttpResponse(json.dumps([ob.as_json() for ob in rezult]))
 
 
+class BackgroundAddFoddView(View):
+    """Сохранение выбранной еды в базу данных"""
+
+    def post(self, request):
+        foodlist_objects = request.POST.get("data").split(";")
+        if(len(foodlist_objects) > 1):
+            for food_obj in foodlist_objects[:-1]:
+                food_json = json.loads(food_obj)
+                food = FoodItem.objects.get(name=food_json["name"])
+                fi = FoodInfo(owner=request.user, food=food, weight=food_json["weight"])
+                print(fi)
+                fi.save()
+        return HttpResponse("ok")
+
 
 class IndexView(View):
     """Главная страница"""

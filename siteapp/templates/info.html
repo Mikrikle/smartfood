@@ -1,6 +1,7 @@
+{% extends  'base.html' %}
 {% load static %}
 
-<head>
+{% block header %}
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
@@ -28,29 +29,32 @@
         chart.draw(data, options);
       }
     </script>
-  </head>
+
+    <script>
+      let foodlist = [];
+      {% for data in information %}
+      foodlist.push("{{data.weight}}")
+      {% endfor %}
+      console.log(foodlist);
+  </script>
+{% endblock %}
 
 
-<script>
-    let foodlist = [];
-    {% for data in information %}
-    foodlist.push("{{data.weight}}")
-    {% endfor %}
-    console.log(foodlist);
-</script>
 
-<div id="chart_div"></div>
+{% block body %}
+  <div id="chart_div"></div>
 
-<a href="{% url 'index' %}">кнопка</a>
+  <a href="{% url 'index' %}">кнопка</a>
 
-{% for data in information %}
-<h5> {{data}} ({{data.date}})</h5>
-<p>
-    {{data.weight}}г
-    ({{data.food.calories }} ККал)
-    (Углеводы {{ data.food.carbohydrates }}г)
-    (Белки {{data.food.proteins}}г)
-    (Жиры {{data.food.fats}}г)
-</p>
-<img src="{{data.food.img.url}}" alt={{data.food.name}} width="64" height="64">
-{% endfor %}
+  {% for data in information %}
+  <h5> {{data}} ({{data.date}})</h5>
+  <p>
+      {{data.weight}}г
+      ({{data.food.calories }} ККал)
+      (Углеводы {{ data.food.carbohydrates }}г)
+      (Белки {{data.food.proteins}}г)
+      (Жиры {{data.food.fats}}г)
+  </p>
+  <img src="{{data.food.img.url}}" alt={{data.food.name}} width="64" height="64">
+  {% endfor %}
+{% endblock %}
