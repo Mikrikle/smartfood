@@ -1,0 +1,17 @@
+.kaushan{
+    font-family: 'Kaushan Script', cursive;
+    font-size: 1.5em;
+    color #333;
+}
+.Bkaushan{
+    font-family: 'Kaushan Script', cursive;
+    font-size: 4em;
+    color #333;
+}
+.intro{
+    width: 100%;
+    height: 100vh;
+    background: url("../images/intro.jpg") center no-repeat;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
