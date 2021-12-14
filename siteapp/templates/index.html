@@ -25,7 +25,7 @@
     let createDishItemDiv = function(name) {  
         let dishes_list = document.getElementById("dishes_list");
         let html_template = `
-        <div class="fooditem">
+        <div class="container fooditem">
             <label class="list-group-item d-flex gap-3">
                 <input class="dishitem_select form-check-input flex-shrink-0" type="checkbox" value="">
                 <span class="pt-1 form-checked-content">
@@ -34,8 +34,8 @@
                 <input class="fooditem_weight" value="100" maxlength="4" required=true type="number" onkeyup="this.value = this.value.replace(/[^\d]/g, '')">г.
             </label>
         </div>`
-        let doc = new DOMParser().parseFromString(html_template, "text/html");
-        dishes_list.appendChild(doc.documentElement);
+        let doc = document.createRange().createContextualFragment(html_template);
+        dishes_list.appendChild(doc);
     }
 
     // очиста списка блюд
@@ -206,7 +206,7 @@
                             $('#exampleModal').modal('hide');
                             let elements = document.querySelectorAll(".fooditem_select");
                             for (let i = 0; i < elements.length; i++) {
-                                elements[i].checked = false;
+                                document.location.href = "{% url 'info' %}";
                             }
                         };
                     });                   
@@ -227,24 +227,25 @@
       </symbol>
     </svg>
 
-
-    <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
-    <p class="fs-5 fw-bolder text-center">
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-            Выбрать
-        </button>
-    </p>
+    <div class="container" id="select-food">
+        <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
+        <p class="fs-5 fw-bolder text-center">
+            <button class="btn btn-light" id="select-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                Выбрать
+            </button>
+        </p>
+    </div>
     <div class="collapse" id="collapseExample">
         <div class="d-flex flex-nowrap">
-            <div class="d-flex p-2 bd-highlight flex-wrap justify-content-center">
+            <div class="d-flex p-2 bd-highlight flex-wrap justify-content-center col py-3 px-lg-5">
                 {% for item in foodlist %}
-                    <div class="fooditem">
-                        <label class="list-group-item d-flex gap-3">
+                    <div class="fooditem ml-md-auto">
+                        <label class="list-group-item gap-3 align-self-stretch">
                             <input class="fooditem_select form-check-input flex-shrink-0" type="checkbox" value="">
                             <span class="pt-1 form-checked-content">
                                 <strong><div class="fooditem_name">{{ item.name }}</div></strong>
                                 <div class="fooditem_model_name opacity-0">{{ item.visionname }}</div>
-                                <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
+                                <img class="img" src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
                             </span>
                         </label>
                     </div>
@@ -258,17 +259,16 @@
         <form action="" method="post" enctype="multipart/form-data" id="form" class="dropzone" id="dropzone">
             {% csrf_token %}
             <div class="form-group">
-                <input type="file" name="img" id="img" multiple />
+                <input type="file" name="img" id="img" />
                 <div id="handleForm" class="btn btn-secondary">Распознать продукты</div>
             </div>
         </form>
     </div>
-    <div class="container text-center">
 
     </div>
     <div class="container text-center">
         <!-- Button trigger modal -->
-        <button id="btn_confirm_food" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+        <button id="btn_confirm_food" type="button" class="btn btn-light" data-toggle="modal" data-target="#exampleModal">
         ПОДТВЕРДИТЬ
         </button>
     </div>
@@ -280,14 +280,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Предложенные блюда</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close">
+            Отмена
           </button>
         </div>
         <div class="modal-body list-group" id="dishes_list">
         </div>
         <div class="modal-footer">
-          <button id="btn_confirm_dishes" type="button" class="btn btn-primary">Подтвердить</button>
+          <button id="btn_confirm_dishes" type="button" class="btn btn-light">Подтвердить</button>
         </div>
       </div>
     </div>

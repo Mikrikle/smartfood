@@ -1,17 +1,46 @@
-.kaushan{
-    font-family: 'Kaushan Script', cursive;
-    font-size: 1.5em;
-    color #333;
+
+/* navbar */
+.container{
+    margin-top: 10px;
+    background-color: #F0E9E7;
+    border-radius: 5px;
+    padding: 10px;
+    border: solid #FABC5B 3px;
 }
-.Bkaushan{
-    font-family: 'Kaushan Script', cursive;
-    font-size: 4em;
-    color #333;
+.nav-link{
+    font-size: 1.75em;
 }
-.intro{
-    width: 100%;
-    height: 100vh;
-    background: url("../images/intro.jpg") center no-repeat;
-    -webkit-background-size: cover;
-    background-size: cover;
+.body{
+    font-family: 'Kaushan Script';
+    background-color: #d8d1cf;
+    background-image:  linear-gradient(30deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(150deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(30deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(150deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(60deg, #F0E9E777 25%, transparent 25.5%, transparent 75%, #F0E9E777 75%, #F0E9E777), linear-gradient(60deg, #F0E9E777 25%, transparent 25.5%, transparent 75%, #F0E9E777 75%, #F0E9E777);
+    background-size: 20px 35px;
+    background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
+}
+.navbar{
+    background-color: #476660;
+}
+.fooditem{
+    margin: 3px;
+    border: solid #981C3D 2px;
+    background-color: #F0E9E7;
+    border-radius: 5px;
+}
+.fooditem .list-group-item{
+    background-color: #F0E9E7;
+}
+.infooditem{
+    padding: 10px;
+}
+#select-btn{
+    width: 75%;
+}
+.modal-content{
+    background-color: #F0E9E7;
+    border-radius: 5px;
+    padding: 10px;
+    border: solid #FABC5B 3px;
+}
+.img{
+    border-radius: 10px;
 }

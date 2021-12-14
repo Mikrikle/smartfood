@@ -28,6 +28,10 @@
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
+
+      window.addEventListener('resize', function(event) {
+        drawChart();
+      }, true);
     </script>
 
     <script>
@@ -42,19 +46,22 @@
 
 
 {% block body %}
-  <div id="chart_div"></div>
+  <div id="chart_div" class="container text-center"></div>
 
-  <a href="{% url 'index' %}">кнопка</a>
-
+  <div class="container d-flex p-2 bd-highlight flex-wrap justify-content-center col py-3 px-lg-5">
   {% for data in information %}
-  <h5> {{data}} ({{data.date}})</h5>
-  <p>
-      {{data.weight}}г
-      ({{data.food.calories }} ККал)
-      (Углеводы {{ data.food.carbohydrates }}г)
-      (Белки {{data.food.proteins}}г)
-      (Жиры {{data.food.fats}}г)
-  </p>
-  <img src="{{data.food.img.url}}" alt={{data.food.name}} width="64" height="64">
+  <div class="fooditem infooditem gap-3">
+    <h5> {{data.food.name}}</h5>
+    <ul>
+        <li>{{data.weight}}г.</li>
+        <li>({{data.food.calories }} ККал)</li>
+        <li>(Углеводы {{ data.food.carbohydrates }}г.)</li>
+        <li>(Белки {{data.food.proteins}}г.)</li>
+        <li>(Жиры {{data.food.fats}}г.)</li>
+    </ul>
+    <img class="img" src="{{data.food.img.url}}" alt={{data.food.name}} width="64" height="64">
+  </div>
+
   {% endfor %}
+</div>
 {% endblock %}
