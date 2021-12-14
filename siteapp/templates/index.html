@@ -227,31 +227,39 @@
       </symbol>
     </svg>
 
-    
+
     <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
-    <div>
-        <div class="list-group">
-            {% for item in foodlist %}
-                <div class="fooditem">
-                    <label class="list-group-item d-flex gap-3">
-                        <input class="fooditem_select form-check-input flex-shrink-0" type="checkbox" value="">
-                        <span class="pt-1 form-checked-content">
-                            <strong><div class="fooditem_name">{{ item.name }}</div></strong>
-                            <div class="fooditem_model_name opacity-0">{{ item.visionname }}</div>
-                            <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
-                        </span>
-                    </label>
-                </div>
-            {% endfor %}
+    <p class="fs-5 fw-bolder text-center">
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            Выбрать
+        </button>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="d-flex flex-nowrap">
+            <div class="d-flex p-2 bd-highlight flex-wrap justify-content-center">
+                {% for item in foodlist %}
+                    <div class="fooditem">
+                        <label class="list-group-item d-flex gap-3">
+                            <input class="fooditem_select form-check-input flex-shrink-0" type="checkbox" value="">
+                            <span class="pt-1 form-checked-content">
+                                <strong><div class="fooditem_name">{{ item.name }}</div></strong>
+                                <div class="fooditem_model_name opacity-0">{{ item.visionname }}</div>
+                                <img src="{{item.img.url}}" alt={{item.name}} width="64" height="64"></a>
+                            </span>
+                        </label>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
+
 
     <div class="container text-center">
         <form action="" method="post" enctype="multipart/form-data" id="form" class="dropzone" id="dropzone">
             {% csrf_token %}
             <div class="form-group">
                 <input type="file" name="img" id="img" multiple />
-                <div id="handleForm">Распознать продукты</div>
+                <div id="handleForm" class="btn btn-secondary">Распознать продукты</div>
             </div>
         </form>
     </div>
