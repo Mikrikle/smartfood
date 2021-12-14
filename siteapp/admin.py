@@ -14,7 +14,7 @@ class IngredientCategoryAdmin(admin.ModelAdmin):
 #-------------------------------------------------------------
 @admin.register(FoodItem)
 class IngredientItemAdmin(admin.ModelAdmin):
-    list_display = ("name", "visionname",  "isIngredient", "category",
+    list_display = ("name", "visionname",  "isDish", "category",
      "get_image", "calories", "fats", "carbohydrates", "proteins" )
     exclude = ('url', )
     readonly_fields = ("get_image",)

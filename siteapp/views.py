@@ -75,7 +75,7 @@ class BackgroundFoodAnalzeView(View):
             print(foodlist_names)
 
         ingredients = FoodItem.objects.filter(visionname__in=foodlist_names)
-        rezult = FoodItem.objects.filter(Q(ingredients__in=ingredients) | (Q(visionname__in=foodlist_names) & Q(isEatable=True))).distinct()
+        rezult = FoodItem.objects.filter(Q(ingredients__in=ingredients)).distinct()
         print(rezult)
         return HttpResponse(json.dumps([ob.as_json() for ob in rezult]))
 
@@ -106,7 +106,7 @@ class IndexView(View):
     template = "index.html"
 
     def get(self, request):
-        model = FoodItem.objects.all()
+        model = FoodItem.objects.filter(isDish=False)
         foodlist = sorted(model, key=lambda instance: instance.name)
         return render(request, self.template, context={'foodlist': foodlist})
 

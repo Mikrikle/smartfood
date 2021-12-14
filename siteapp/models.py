@@ -44,8 +44,7 @@ class FoodItem(models.Model):
     """Еда"""
     name = models.CharField("Название", max_length=150)
     visionname = models.CharField("Обозначение в CustomVision", max_length=150, blank=True)
-    isIngredient = models.BooleanField("Может использоваться в качестве ингредиента")
-    isEatable = models.BooleanField("Готово к употреблению")
+    isDish = models.BooleanField("Блюдо?", default=False)
     ingredients = models.ManyToManyField('self', blank=True, verbose_name="Ингредиенты")
     img = models.ImageField("Изображение", upload_to = "img/food")
     url = models.SlugField(max_length=160, unique=True)
