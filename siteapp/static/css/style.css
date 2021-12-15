@@ -11,7 +11,7 @@
     font-size: 1.75em;
 }
 .body{
-    font-family: 'Kaushan Script';
+    font-family: 'Kaushan Script', cursive;
     background-color: #d8d1cf;
     background-image:  linear-gradient(30deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(150deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(30deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(150deg, #F0E9E7 12%, transparent 12.5%, transparent 87%, #F0E9E7 87.5%, #F0E9E7), linear-gradient(60deg, #F0E9E777 25%, transparent 25.5%, transparent 75%, #F0E9E777 75%, #F0E9E777), linear-gradient(60deg, #F0E9E777 25%, transparent 25.5%, transparent 75%, #F0E9E777 75%, #F0E9E777);
     background-size: 20px 35px;
