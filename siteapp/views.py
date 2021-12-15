@@ -75,7 +75,11 @@ class BackgroundFoodAnalzeView(View):
             print(foodlist_names)
 
         ingredients = FoodItem.objects.filter(visionname__in=foodlist_names)
-        rezult = FoodItem.objects.filter(Q(ingredients__in=ingredients)).distinct()
+        rezult = []
+        for dish in FoodItem.objects.filter(isDish=True):
+            if set(dish.ingredients.all()).issubset(set(ingredients)):
+                rezult.append(dish)
+
         print(rezult)
         return HttpResponse(json.dumps([ob.as_json() for ob in rezult]))
 
