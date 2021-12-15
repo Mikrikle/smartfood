@@ -237,6 +237,12 @@
         }
     }
 
+    function OpenCollapse() {
+        jQuery('select-btn').click(function() {
+            $('select-btn').collapse('toggle');
+        });
+    }
+
 </script>
 {% endblock %}
 
@@ -251,11 +257,12 @@
     <div class="container" id="select-food">
         <p class="fs-5 fw-bolder text-center">Выберите продукты из списка или сфотографируйте их:</p>
         <p class="fs-5 fw-bolder text-center">
-            <button class="btn btn-light" id="select-btn" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            <button class="btn btn-light" id="select-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                 Выбрать
             </button>
         </p>
     </div>
+
     <div class="collapse" id="collapseExample">
         <div class="d-flex flex-nowrap">
             <div class="d-flex p-2 bd-highlight flex-wrap justify-content-center col py-3 px-lg-5">
