@@ -89,13 +89,11 @@
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             let response = JSON.parse(xhr.response);
                             console.log(`Результат распознавания: ${response.rezult}`);
-                            
-                            jQuery("#handleForm").ready(function() {
-                              $(this).removeClass('disabled');
-                              $(this).html(
+
+                             jQuery('#handleForm').removeClass('disabled');
+                             jQuery('#handleForm').html(
                                 `Распознать продукты`
-                                );
-                            });
+                             );
 
                             if(response.rezult)
                             {
