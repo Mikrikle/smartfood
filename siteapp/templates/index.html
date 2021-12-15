@@ -216,6 +216,14 @@
             );
         }
     );
+
+    function OpenCollapseOnAction() {
+        var myCollapse = document.getElementById('collapseExample')
+        var bsCollapse = new bootstrap.Collapse(myCollapse, {
+            toggle: true
+        })
+    }
+
 </script>
 {% endblock %}
 
@@ -254,13 +262,12 @@
         </div>
     </div>
 
-
     <div class="container text-center">
         <form action="" method="post" enctype="multipart/form-data" id="form" class="dropzone" id="dropzone">
             {% csrf_token %}
             <div class="form-group">
                 <input type="file" name="img" id="img" />
-                <div id="handleForm" class="btn btn-secondary">Распознать продукты</div>
+                <div id="handleForm" class="btn btn-secondary" onclick="OpenCollapseOnAction()">Распознать продукты</div>
             </div>
         </form>
     </div>
