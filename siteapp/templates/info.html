@@ -21,9 +21,12 @@
           ['Углеводы {{ count_values.nCarbohydrates }}г', {{ count_values.nCarbohydrates }}],
         ]);
 
-        var options = {'title':'',
+        var options = {
+          'title':'',
                        'width':400,
-                       'height':300};
+                       'height':300,
+                       backgroundColor: '#F0E9E7',
+                      };
 
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
@@ -46,20 +49,28 @@
 
 
 {% block body %}
-  <div id="chart_div" class="container text-center"></div>
+  <div id="chart_div" class="container d-flex justify-content-center"></div>
 
   <div class="container d-flex p-2 bd-highlight flex-wrap justify-content-center col py-3 px-lg-5">
   {% for data in information %}
-  <div class="fooditem infooditem gap-3">
-    <h5> {{data.food.name}}</h5>
-    <ul>
-        <li>{{data.weight}}г.</li>
-        <li>({{data.food.calories }} ККал)</li>
-        <li>(Углеводы {{ data.food.carbohydrates }}г.)</li>
-        <li>(Белки {{data.food.proteins}}г.)</li>
-        <li>(Жиры {{data.food.fats}}г.)</li>
-    </ul>
-    <img class="img" src="{{data.food.img.url}}" alt={{data.food.name}} width="64" height="64">
+
+
+  <div class="fooditem infooditem card" style="width: 18rem;">
+    <img class="card-img-top img" src="{{data.food.img.url}}" alt={{data.food.name}}>
+    <div class="card-body">
+      <h5 class="card-title">{{data.food.name}}</h5>
+      <p class="card-text">
+        <ul>
+          <li>{{data.weight}}г.</li>
+          <li>({{data.food.calories }} ККал)</li>
+          <li>(Углеводы {{ data.food.carbohydrates }}г.)</li>
+          <li>(Белки {{data.food.proteins}}г.)</li>
+          <li>(Жиры {{data.food.fats}}г.)</li>
+      </ul>
+      </p>
+      <a href="#" class="btn btn-secondary  btn-sm">Редактировать</a>
+      <a href="#" class="btn btn-danger  btn-sm">Удалить</a>
+    </div>
   </div>
 
   {% endfor %}
