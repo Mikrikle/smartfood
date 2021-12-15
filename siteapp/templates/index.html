@@ -64,14 +64,10 @@
             document.getElementById("handleForm").addEventListener("click", 
                 function()
                 {
-
-                    jQuery("#handleForm").click(function() {
-                      $(this).addClass('disabled');
-                      $(this).html(
+                     jQuery("#handleForm").addClass('disabled');
+                     jQuery("#handleForm").html(
                         `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner" ></span> Распознавание...`
-                        );
-                    });
-
+                     );
 
                     // отправка данных на сервер
                     let formData  = new FormData( document.getElementById("form") );
@@ -125,7 +121,7 @@
     );
 
     // Добавляет/Удаляет еду из списка по клику на нее для выбранной еды
-    document.addEventListener("DOMContentLoaded", 
+    document.addEventListener("DOMContentLoaded",
         function() {
             let elements = document.querySelectorAll(".fooditem_select");
             for (let i = 0; i < elements.length; i++) {
@@ -143,7 +139,7 @@
         }
     );
 
-    
+
     // Добавляет/Удаляет еду из списка по клику на нее для списка предложенных блюд
     let updateOnClickToDishes = function() {
         let elements = document.querySelectorAll(".dishitem_select");
@@ -160,12 +156,12 @@
             };
         }
     }
-    
-    
+
+
     // Отправка данных для получения списка возможных блюд
-    document.addEventListener("DOMContentLoaded", 
+    document.addEventListener("DOMContentLoaded",
         function(){
-            document.getElementById("btn_confirm_food").addEventListener("click", 
+            document.getElementById("btn_confirm_food").addEventListener("click",
                 function() {
                     const xhr = new XMLHttpRequest();
                     const url = "{% url 'foodanalize' %}";
@@ -189,7 +185,7 @@
                             }
                             updateOnClickToDishes();
                         };
-                    });                   
+                    });
 
                     xhr.send(params);
                 }
@@ -199,9 +195,9 @@
 
 
     // Отправка данных для сохранения блюд в базу данных
-    document.addEventListener("DOMContentLoaded", 
+    document.addEventListener("DOMContentLoaded",
         function(){
-            document.getElementById("btn_confirm_dishes").addEventListener("click", 
+            document.getElementById("btn_confirm_dishes").addEventListener("click",
                 function() {
                     const xhr = new XMLHttpRequest();
                     const url = "{% url 'addfood' %}";
@@ -224,7 +220,7 @@
                                 document.location.href = "{% url 'info' %}";
                             }
                         };
-                    });                   
+                    });
 
                     xhr.send(params);
                 }
@@ -234,20 +230,12 @@
 
     function OpenCollapseOnAction() {
         var myCollapse = document.getElementById('collapseExample')
-        var bsCollapse = new bootstrap.Collapse(myCollapse, {
-            toggle: true
-        })
+        if (!jQuery(myCollapse).hasClass('show')) {
+            var bsCollapse = new bootstrap.Collapse(myCollapse, {
+                    show: true
+            })
+        }
     }
-
-
-    $(document).ready(function() {
-                            $("#handleForm").click(function() {
-                              $(this).prop("disabled", true);
-                              $(this).html(
-                                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner" ></span> Распознавание...`
-                                );
-                            });
-                    });
 
 </script>
 {% endblock %}
