@@ -64,6 +64,15 @@
             document.getElementById("handleForm").addEventListener("click", 
                 function()
                 {
+
+                    jQuery("#handleForm").click(function() {
+                      $(this).addClass('disabled');
+                      $(this).html(
+                        `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner" ></span> Распознавание...`
+                        );
+                    });
+
+
                     // отправка данных на сервер
                     let formData  = new FormData( document.getElementById("form") );
 
@@ -74,12 +83,20 @@
 
                     let xhr = new XMLHttpRequest();
                     xhr.open("POST", "{% url 'customvision' %}");
-                    
+
                     // получение ответа от сервера
                     xhr.addEventListener("readystatechange", () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             let response = JSON.parse(xhr.response);
                             console.log(`Результат распознавания: ${response.rezult}`);
+                            
+                            jQuery("#handleForm").ready(function() {
+                              $(this).removeClass('disabled');
+                              $(this).html(
+                                `Распознать продукты`
+                                );
+                            });
+
                             if(response.rezult)
                             {
                                 let all_fooditem_selectors = document.querySelectorAll(".fooditem_select");
@@ -224,6 +241,16 @@
         })
     }
 
+
+    $(document).ready(function() {
+                            $("#handleForm").click(function() {
+                              $(this).prop("disabled", true);
+                              $(this).html(
+                                `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" id="spinner" ></span> Распознавание...`
+                                );
+                            });
+                    });
+
 </script>
 {% endblock %}
 
@@ -267,7 +294,9 @@
             {% csrf_token %}
             <div class="form-group">
                 <input type="file" name="img" id="img" />
-                <div id="handleForm" class="btn btn-secondary" onclick="OpenCollapseOnAction()">Распознать продукты</div>
+                <div id="handleForm" class="btn btn-secondary" onclick="OpenCollapseOnAction()">
+                     Распознать продукты
+                </div>
             </div>
         </form>
     </div>
