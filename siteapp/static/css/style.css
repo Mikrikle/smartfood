@@ -5,7 +5,7 @@
     background-color: #28d3ff;
     border-radius: 5px;
     padding: 10px;
-    border: solid #FABC5B 3px;
+    border: solid #005678 3px;
 }
 .nav-link{
     font-size: 1.75em;
@@ -24,7 +24,7 @@
 }
 .fooditem{
     margin: 3px;
-    border: solid #981C3D 2px;
+    border: solid #005678 2px;
     background-color: #F0E9E7;
     border-radius: 5px;
 }
