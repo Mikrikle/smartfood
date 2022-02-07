@@ -46,3 +46,22 @@
 .img{
     border-radius: 10px;
 }
+
+/*  carousel  */
+.carousel-container
+{
+    display: flex;
+    justify-content: center;
+    padding:10px;
+}
+.carousel-body
+{
+    width: 50%;
+}
+.carousel-img
+{
+    height:200px;
+    width:200px;
+    background-size:cover;
+    object-fit: cover;
+}
