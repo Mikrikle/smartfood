@@ -35,9 +35,8 @@
 
 <body class="body">
 
-    <header
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-        <nav class="navbar navbar-expand-md fixed-top bg-white">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4">
+        <nav class="navbar navbar-expand-md fixed-top bg-white border-bottom">
             <div class="container-fluid">
                 <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
                     <img src="{% static 'images/logo.svg' %}" width="40" height="40"/>
@@ -57,8 +56,13 @@
     {% block body %}
     {% endblock %}
 
-    <footer>
-        <div>test</div>
+    <footer class="navbar-fixed-bottom py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="{% url 'index' %}" class="nav-link px-2 text-muted">Home</a></li>
+          <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link px-2 text-muted">FAQs</a></li>
+          <li class="nav-item"><a href="{% url 'info' %}" class="nav-link px-2 text-muted">Profile</a></li>
+        </ul>
+        <p class="text-center text-muted">Поддержка: SmartFood@mail.ru</p>
     </footer>
 
 </body>
