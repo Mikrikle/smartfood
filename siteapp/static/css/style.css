@@ -1,67 +1,7 @@
 
-/* navbar */
-.container{
-    margin-top: 10px;
-    background-color: #28d3ff;
-    border-radius: 5px;
-    padding: 10px;
-    border: solid #005678 3px;
-}
-.nav-link{
-    font-size: 1.75em;
-}
-.body{
-    font-family: 'Kaushan Script', cursive;
-    color: #00569f;
-    background-color: #e5e5f7;
-    opacity: 0.8;
-    background-image: radial-gradient(#444cf7 0.5px, #e5e5f7 0.5px);
-    background-size: 10px 10px;
-    background-position: 0 0, 0 0, 10px 18px, 10px 18px, 0 0, 10px 18px;
-}
-.navbar{
-    background-color: #005678;
-}
-.fooditem{
-    margin: 3px;
-    border: solid #005678 2px;
-    background-color: #F0E9E7;
-    border-radius: 5px;
-}
-.fooditem .list-group-item{
-    background-color: #F0E9E7;
-}
-.infooditem{
-    padding: 10px;
-}
-#select-btn{
-    width: 75%;
-}
-.modal-content{
-    background-color: #F0E9E7;
-    border-radius: 5px;
-    padding: 10px;
-    border: solid #FABC5B 3px;
-}
-.img{
-    border-radius: 10px;
-}
-
-/*  carousel  */
-.carousel-container
+/* Меню выбора ингредиентов */
+#collapsebody
 {
-    display: flex;
-    justify-content: center;
-    padding:10px;
-}
-.carousel-body
-{
-    width: 50%;
-}
-.carousel-img
-{
-    height:200px;
-    width:200px;
-    background-size:cover;
-    object-fit: cover;
+    height: 24em; /* высота нашего блока */
+    overflow-y: scroll; /* прокрутка по вертикали */
 }

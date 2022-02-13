@@ -2,7 +2,8 @@
 
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,43 +14,53 @@
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 
     <!-- Bootstrap CSS -->
-    <link type="text/css" href="{% static '/css/bootstrap.css' %}" rel="stylesheet"/>
-    <link href="{% static '/css/list-groups.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static '/css/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static '/css/list-groups.css' %}" rel="stylesheet" />
     <link rel="shortcut icon" href="{% static 'images/icon.ico' %}" type="image/x-icon">
-    <link type="text/css" href="{% static '/css/style.css' %}" rel="stylesheet"/>
+    <link type="text/css" href="{% static '/css/style.css' %}" rel="stylesheet" />
 
     <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
     <script src="{% static '/js/bootstrap.min.js' %}"></script>
 
 
     {% block header %}
-    {% endblock  %}
-  </head>
-  <body class="body">
-  
+    {% endblock %}
+</head>
 
+<body class="body">
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand" href="{% url 'index' %}">
-        <img src="{% static 'images/logo.svg' %}" width="48" height="48"/>
-        SmartFood
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Главная</a></li>
-          <li class="nav-item"><a href="{% url 'faq' %}" class="nav-link" aria-current="page">О нас</a></li>
-          <li class="nav-item"><a href="{% url 'info' %}" class="nav-link" aria-current="page">Профиль</a></li>
-        </ul>
-      </div>
-    </nav>
+    <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <nav class="navbar navbar-expand-md fixed-top bg-white">
+            <div class="container-fluid">
+                <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                    <img src="{% static 'images/logo.svg' %}" width="40" height="40"/>
+                </a>
+                <div class="col-md-3 text-end">
+                    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="{% url 'index' %}" class="nav-link px-2 link-dark">Home</a></li>
+                        <li><a href="{% url 'faq' %}" class="nav-link px-2 link-dark">FAQs</a></li>
+                        <li><a href="{% url 'info' %}" class="nav-link px-2 link-dark">Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
 
     {% block body %}
-    {% endblock  %}
-  </body>
+    {% endblock %}
+
+    <footer>
+        <div>test</div>
+    </footer>
+
+</body>
+
 </html>
