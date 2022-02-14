@@ -112,7 +112,8 @@ class IndexView(View):
     def get(self, request):
         model = FoodItem.objects.filter(isDish=False)
         foodlist = sorted(model, key=lambda instance: instance.name)
-        return render(request, self.template, context={'foodlist': foodlist})
+        dishlist = FoodItem.objects.filter(isDish=True)
+        return render(request, self.template, context={'foodlist': foodlist, 'dishlist':dishlist})
 
 
 class FAQView(View):
