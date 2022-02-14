@@ -1,7 +1,47 @@
 
+#intro{
+    background: no-repeat url("../images/bg.jpg");
+}
+
 /* Меню выбора ингредиентов */
 #collapsebody
 {
     height: 24em; /* высота нашего блока */
     overflow-y: scroll; /* прокрутка по вертикали */
+}
+
+/* Карусель */
+.gallery
+{
+    -webkit-box-shadow: 4px 4px 8px 4px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: 4px 4px 8px 4px rgba(34, 60, 80, 0.2);
+    box-shadow: 4px 4px 8px 4px rgba(34, 60, 80, 0.2);
+}
+.gallery-cell 
+{
+    width: 66%;
+    height: 300px;
+    margin-right: 10px;
+    background: #53A57F;
+    counter-increment: gallery-cell;
+}
+.flickity-page-dots
+{
+    opacity: 0%;
+    display: none;
+}
+.gallery-img
+{
+    margin: 20px;
+    height: 260px;
+    width: 50%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.gallery-text
+{
+    margin: 20px;
+    height: 260px;
+    width: 50%;
+    text-align: center;
 }

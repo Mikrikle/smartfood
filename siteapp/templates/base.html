@@ -18,6 +18,7 @@
     <link href="{% static '/css/list-groups.css' %}" rel="stylesheet" />
     <link rel="shortcut icon" href="{% static 'images/icon.ico' %}" type="image/x-icon">
     <link type="text/css" href="{% static '/css/style.css' %}" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static '/css/flickity.css' %}" media="screen">
 
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -27,7 +28,9 @@
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
     <script src="{% static '/js/bootstrap.min.js' %}"></script>
+    <script src="{% static '/js/flickity.pkgd.min.js' %}"></script>
 
+    
 
     {% block header %}
     {% endblock %}
@@ -39,7 +42,8 @@
         <nav class="navbar navbar-expand-md fixed-top bg-white border-bottom">
             <div class="container-fluid">
                 <a href="#" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                    <img src="{% static 'images/logo.svg' %}" width="40" height="40"/>
+                    <!--<img src="{% static 'images/logo.svg' %}" width="40" height="40"/>-->
+                    <span class="navbar-brand"><em>SmartFood</em></span>
                 </a>
                 <div class="col-md-3 text-end">
                     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
