@@ -1,6 +1,6 @@
 
 #intro{
-    background: no-repeat url("../images/bg.jpg");
+    background: url("../images/bg2.jpg");
 }
 
 /* Меню выбора ингредиентов */
@@ -22,7 +22,7 @@
     width: 66%;
     height: 300px;
     margin-right: 10px;
-    background: #53A57F;
+    background: #76ba0f;
     counter-increment: gallery-cell;
 }
 .flickity-page-dots
